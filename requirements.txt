@@ -7,4 +7,3 @@ streamlit
 faker
 mysql-connector-python
 pandas
-random
