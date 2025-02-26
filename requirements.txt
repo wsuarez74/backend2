@@ -4,3 +4,7 @@ python-dotenv
 fastapi
 uvicorn
 streamlit
+faker
+mysql-connector-python
+pandas
+random
