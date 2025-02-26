@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import mysql.connector
 import pandas as pd
@@ -13,6 +13,7 @@ app = FastAPI()
 DATABASE_URL = "mysql+mysqlconnector://wsuarez:Afsmnz78@mi-backend-aqaxd3g5a2h5azgp.spaincentral-01.azurewebsites.net/ventas_bd"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 Base = declarative_base()
 
 # Modelos de Base de Datos
