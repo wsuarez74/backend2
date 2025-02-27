@@ -9,14 +9,12 @@ import joblib
 
 app = FastAPI()
 
-# Configuración de la base de datos MySQL
 DATABASE_URL = "mysql+mysqlconnector://wsuarez:Afsmnz78@mi-backend-aqaxd3g5a2h5azgp.spaincentral-01.azurewebsites.net/ventas_bd"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Modelos de Base de Datos
 class Cliente(Base):
     __tablename__ = "clientes"
     id = Column(Integer, primary_key=True, index=True)
@@ -39,14 +37,11 @@ class Cobranza(Base):
     monto_pagado = Column(Float)
     cliente = relationship("Cliente")
 
-# Crear tablas
 Base.metadata.create_all(bind=engine)
 
-# Modelo de entrada para consultas
 class ClienteConsulta(BaseModel):
     nombre: str
 
-# Cargar modelo de IA
 modelo_ventas = joblib.load("modelo_ventas.pkl")
 
 @app.get("/productos_mas_vendidos/")
