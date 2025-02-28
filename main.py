@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, func
@@ -8,6 +9,7 @@ import pandas as pd
 import joblib
 
 app = FastAPI()
+#app = Flask(__name__)
 
 DATABASE_URL = "mysql+mysqlconnector://wsuarez:Afsmnz78@mi-backend-aqaxd3g5a2h5azgp.spaincentral-01.azurewebsites.net/ventas_bd"
 engine = create_engine(DATABASE_URL)
