@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey, func
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import mysql.connector
@@ -58,8 +58,8 @@ def evaluar_cliente(datos: ClienteConsulta):
     if not cliente:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     
-    total_compras = db.query(Venta).filter(Venta.cliente_id == cliente.id).sum(Venta.monto)
-    total_cobrado = db.query(Cobranza).filter(Cobranza.cliente_id == cliente.id).sum(Cobranza.monto_pagado)
+    total_compras = db.query(func.sum(Venta.monto)).filter(Venta.cliente_id == cliente.id).scalar()
+    total_cobrado = db.query(func.sum(Cobranza.monto_pagado)).filter(Cobranza.cliente_id == cliente.id).scalar()
     saldo = total_compras - total_cobrado
     
     prediccion = modelo_ventas.predict([[total_compras, total_cobrado, cliente.credito_disponible]])
